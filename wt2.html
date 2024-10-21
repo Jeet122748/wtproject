@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Voting System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        nav a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Online Voting System</h1>
+
+    <nav>
+        <a href="#" onclick="showPage('home')">Home</a> | 
+        <a href="#" onclick="showPage('register')">Register</a> | 
+        <a href="#" onclick="showPage('login')">Login</a> | 
+        <a href="#" onclick="showPage('vote')">Vote</a> | 
+        <a href="#" onclick="showPage('results')">Results</a>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <h2>Welcome to the Online Voting System</h2>
+        <p>Please use the navigation to register, log in, vote, or view results.</p>
+    </div>
+
+    <!-- Registration Page -->
+    <div id="register" class="page">
+        <h2>Register</h2>
+        <form id="registerForm" onsubmit="return validateRegistration()">
+            <label for="username">Username:</label>
+            <input type="text" id="regUsername" name="username" required><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="regPassword" name="password" required><br>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page">
+        <h2>Login</h2>
+        <form id="loginForm" onsubmit="return validateLogin()">
+            <label for="username">Username:</label>
+            <input type="text" id="loginUsername" name="username" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="loginPassword" name="password" required><br>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Voting Page -->
+    <div id="vote" class="page">
+        <h2>Vote for Your Candidate</h2>
+        <form id="voteForm" onsubmit="return validateVote()">
+            <label for="candidate">Choose a candidate:</label>
+            <select id="candidate" name="candidate" required>
+                <option value="">Select</option>
+                <option value="Candidate1">Candidate 1</option>
+                <option value="Candidate2">Candidate 2</option>
+                <option value="Candidate3">Candidate 3</option>
+            </select><br>
+
+            <button type="submit">Vote</button>
+        </form>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results" class="page">
+        <h2>Results</h2>
+        <p>Results will be displayed here after voting closes.</p>
+    </div>
+
+    <script>
+        // Function to show the correct page based on navigation
+        function showPage(pageId) {
+            var pages = document.getElementsByClassName('page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Registration form validation
+        function validateRegistration() {
+            var password = document.getElementById("regPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            alert("Registration successful!");
+            showPage('login'); // Redirect to login after successful registration
+            return false; // Prevent form submission
+        }
+
+        // Login form validation
+        function validateLogin() {
+            var username = document.getElementById("loginUsername").value;
+            var password = document.getElementById("loginPassword").value;
+
+            if (username === "" || password === "") {
+                alert("Both fields are required.");
+                return false;
+            }
+            alert("Login successful!");
+            showPage('vote'); // Redirect to vote after successful login
+            return false; // Prevent form submission
+        }
+
+        // Vote form validation
+        function validateVote() {
+            var candidate = document.getElementById("candidate").value;
+
+            if (candidate === "") {
+                alert("Please select a candidate.");
+                return false;
+            }
+            alert("Thank you for voting!");
+            showPage('results'); // Redirect to results after successful voting
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>
